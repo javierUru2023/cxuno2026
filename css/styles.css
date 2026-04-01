@@ -657,14 +657,27 @@ body {
     text-overflow: ellipsis;
   }
 
+  .show-kicker {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .show-time,
   .show-next {
-    font-size: 0.66rem;
-    line-height: 1.2;
+    font-size: 0.72rem;
+    line-height: 1.25;
     overflow-wrap: anywhere;
   }
 
-  /* Limitar show-next a 2 líneas máximo */
+  .show-time {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
   .show-next {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -673,9 +686,12 @@ body {
     overflow: hidden;
   }
 
-  /* Asegurar que el card no desborde el player-box */
   .now-playing-card {
     overflow: hidden;
+  }
+
+  .divider {
+    margin-bottom: 22px;
   }
 }
 
@@ -711,64 +727,42 @@ body {
   }
 
   .equalizer-live-badge {
-    min-height: 20px;
-    padding: 3px 7px;
-  }
+    @media (max-width: 400px) {
+      .show-kicker {
+        font-size: 0.64rem;
+        letter-spacing: 0.05em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
 
-  .player-box {
-    width: min(344px, 94vw);
-    max-width: 344px;
-    padding: 12px;
-  }
+      .show-time,
+      .show-next {
+        font-size: 0.66rem;
+        line-height: 1.2;
+        overflow-wrap: anywhere;
+      }
 
-  .equalizer {
-    height: clamp(86px, 19vh, 108px);
-    column-gap: 2px;
-  }
+      .show-time {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
 
-  .column span {
-    height: clamp(10px, 2.6vw, 13px);
-  }
+      .show-next {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
 
-  .menu-icon {
-    width: clamp(56px, 12vw, 68px);
-    height: clamp(56px, 12vw, 68px);
-  }
-}
-
-@media (max-width: 380px) {
-  .player-box {
-    width: min(330px, 95vw);
-    max-width: 330px;
-    padding: 11px;
-  }
-
-  .player-display {
-    grid-template-columns: minmax(0, 1.35fr) minmax(100px, 0.9fr);
-    gap: 8px;
-  }
-
-  .equalizer {
-    height: clamp(96px, 19vh, 114px);
-    padding-top: 40px;
-  }
-
-  .equalizer-show-name {
-    font-size: 0.74rem;
-  }
-
-  .show-time,
-  .show-next {
-    font-size: 0.72rem;
-  }
-
-  .controls button {
-    margin: 0 8px;
-  }
-}
-
-@media (max-width: 320px) {
-  .container {
+      .now-playing-card {
+        overflow: hidden;
+      }
+    }
     padding: 8px 0.35rem;
   }
 
@@ -817,17 +811,8 @@ body {
     font-size: 0.5rem;
   }
 
-  .line {
-    margin: 6px 0;
-  }
-
-  .controls {
-    margin-top: 4px;
-  }
-
-  .controls button {
-    font-size: 1.4rem;
-    margin: 0 6px;
+  .divider {
+    margin-bottom: 22px;
   }
 }
 

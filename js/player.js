@@ -333,16 +333,21 @@ function scrollToSection(targetId) {
   const section = document.getElementById(targetId);
   if (!section) return;
 
-  // scrollIntoView falla en algunos navegadores Android/MIUI cuando el
-  // contenedor padre tiene overflow-x, porque el browser lo trata como
-  // scroll container. Usamos window.scrollTo con offsetTop (mas compatible).
-  const top = Math.max(0, section.offsetTop - 8);
+  setActiveMenuItem(targetId);
+
+  // getBoundingClientRect + pageYOffset: no depende de offsetParent ni de
+  // cual elemento sea el scroll container. Mas confiable en Android/MIUI.
+  const rect = section.getBoundingClientRect();
+  const currentScroll = window.pageYOffset
+    || document.documentElement.scrollTop
+    || document.body.scrollTop
+    || 0;
+  const top = Math.max(0, currentScroll + rect.top - 8);
   try {
     window.scrollTo({ top: top, behavior: "smooth" });
   } catch (e) {
     window.scrollTo(0, top);
   }
-  setActiveMenuItem(targetId);
 }
 
 function bindMenuAnchors() {
