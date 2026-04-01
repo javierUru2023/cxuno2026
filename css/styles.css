@@ -651,6 +651,10 @@ body {
   .show-kicker {
     font-size: 0.64rem;
     letter-spacing: 0.05em;
+    /* Una sola línea con ellipsis para que no desborde la tarjeta angosta */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .show-time,
@@ -658,6 +662,20 @@ body {
     font-size: 0.66rem;
     line-height: 1.2;
     overflow-wrap: anywhere;
+  }
+
+  /* Limitar show-next a 2 líneas máximo */
+  .show-next {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Asegurar que el card no desborde el player-box */
+  .now-playing-card {
+    overflow: hidden;
   }
 }
 
@@ -1039,7 +1057,9 @@ body.scrolling::-webkit-scrollbar-thumb {
 }
 
 .page-content {
-  overflow-x: hidden;
+  /* clip en vez de hidden: no crea scroll container (evita que scrollIntoView
+     apunte a este elemento en vez de window en mobile) */
+  overflow-x: clip;
 }
 
 .inicio-panel {

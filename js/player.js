@@ -39,6 +39,55 @@ let currentLevels = [];
 let targetLevels = [];
 let scrollHideTimeoutId = null;
 
+// Estado de reproduccion y reconexion
+let userWantsToPlay = false;
+let reconnectAttempts = 0;
+let reconnectTimeoutId = null;
+let stalledTimeoutId = null;
+let waitingTimeoutId = null;
+const MAX_RECONNECT_ATTEMPTS = 8;
+const BASE_RECONNECT_MS = 2000;
+
+function getReconnectDelay(attempt) {
+  return Math.min(BASE_RECONNECT_MS * Math.pow(2, attempt), 30000);
+}
+
+function cancelReconnect() {
+  if (reconnectTimeoutId) { clearTimeout(reconnectTimeoutId); reconnectTimeoutId = null; }
+  if (stalledTimeoutId) { clearTimeout(stalledTimeoutId); stalledTimeoutId = null; }
+  if (waitingTimeoutId) { clearTimeout(waitingTimeoutId); waitingTimeoutId = null; }
+}
+
+function setPlayerStatus(text) {
+  if (liveStatusText) liveStatusText.textContent = text;
+}
+
+function reconnectPlayer() {
+  if (!userWantsToPlay) return;
+
+  if (reconnectAttempts >= MAX_RECONNECT_ATTEMPTS) {
+    setPlayerStatus("SIN SEÑAL");
+    reconnectAttempts = 0;
+    return;
+  }
+
+  const delay = getReconnectDelay(reconnectAttempts);
+  reconnectAttempts++;
+  setPlayerStatus(reconnectAttempts === 1 ? "CONECTANDO..." : "RECONECTANDO...");
+
+  reconnectTimeoutId = setTimeout(() => {
+    if (!player || !userWantsToPlay) return;
+    // Fuerza recarga del stream
+    const src = "https://stream.zeno.fm/fasg5w19rm0uv";
+    player.src = "";
+    player.src = src;
+    player.load();
+    player.play().catch(() => {
+      reconnectPlayer();
+    });
+  }, delay);
+}
+
 function parseMinutes(timeText) {
   const [hours, minutes] = timeText.split(":").map(Number);
   return (hours * 60) + minutes;
@@ -155,12 +204,18 @@ function updateToggleButton(playing) {
 async function togglePlayPause() {
   if (!player) return;
   if (player.paused) {
+    userWantsToPlay = true;
+    reconnectAttempts = 0;
+    cancelReconnect();
     try {
       await player.play();
     } catch (error) {
       console.error("Error al reproducir:", error);
+      reconnectPlayer();
     }
   } else {
+    userWantsToPlay = false;
+    cancelReconnect();
     player.pause();
   }
 }
@@ -168,13 +223,15 @@ async function togglePlayPause() {
 // Detiene completamente el stream
 function stopRadio() {
   if (!player) return;
+  userWantsToPlay = false;
+  cancelReconnect();
+  reconnectAttempts = 0;
   player.pause();
-  player.currentTime = 0;
-  const currentSrc = player.src;
   player.src = "";
-  player.src = currentSrc;
+  player.src = "https://stream.zeno.fm/fasg5w19rm0uv";
   updateToggleButton(false);
   hideEqualizer();
+  updateScheduleDisplay();
 }
 
 function applyColumnLevels() {
@@ -276,7 +333,15 @@ function scrollToSection(targetId) {
   const section = document.getElementById(targetId);
   if (!section) return;
 
-  section.scrollIntoView({ behavior: "smooth", block: "start" });
+  // scrollIntoView falla en algunos navegadores Android/MIUI cuando el
+  // contenedor padre tiene overflow-x, porque el browser lo trata como
+  // scroll container. Usamos window.scrollTo con offsetTop (mas compatible).
+  const top = Math.max(0, section.offsetTop - 8);
+  try {
+    window.scrollTo({ top: top, behavior: "smooth" });
+  } catch (e) {
+    window.scrollTo(0, top);
+  }
   setActiveMenuItem(targetId);
 }
 
@@ -438,8 +503,11 @@ function bindVoiceForm() {
 // Eventos del reproductor
 if (player) {
   player.addEventListener("playing", () => {
+    cancelReconnect();
+    reconnectAttempts = 0;
     updateToggleButton(true);
     showEqualizer();
+    updateScheduleDisplay();
   });
 
   player.addEventListener("pause", () => {
@@ -447,9 +515,56 @@ if (player) {
     hideEqualizer();
   });
 
+  // Un stream en vivo no deberia terminar; si pasa, reconectar
   player.addEventListener("ended", () => {
     updateToggleButton(false);
     hideEqualizer();
+    reconnectPlayer();
+  });
+
+  // Error de red o del stream
+  player.addEventListener("error", () => {
+    if (!userWantsToPlay) return;
+    updateToggleButton(false);
+    hideEqualizer();
+    reconnectPlayer();
+  });
+
+  // Stalled: el navegador trato de cargar datos pero no llego nada
+  player.addEventListener("stalled", () => {
+    if (!userWantsToPlay) return;
+    stalledTimeoutId = setTimeout(() => {
+      if (userWantsToPlay && (player.paused || player.readyState < 3)) {
+        reconnectPlayer();
+      }
+    }, 8000);
+  });
+
+  // Waiting: buffering (puede ser natural, pero en movil se puede colgar)
+  player.addEventListener("waiting", () => {
+    if (!userWantsToPlay) return;
+    setPlayerStatus("CARGANDO...");
+    waitingTimeoutId = setTimeout(() => {
+      if (userWantsToPlay && player.paused) {
+        reconnectPlayer();
+      }
+    }, 12000);
+  });
+
+  // Cuando la pagina vuelve a estar visible (desbloqueo de pantalla en movil)
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) return;
+    if (userWantsToPlay && player.paused && !reconnectTimeoutId) {
+      reconnectAttempts = 0;
+      reconnectPlayer();
+    }
+  });
+
+  // iOS: cuando el audio es interrumpido (llamada, etc.) y luego retoma
+  player.addEventListener("canplay", () => {
+    if (userWantsToPlay && player.paused && !reconnectTimeoutId) {
+      player.play().catch(() => {});
+    }
   });
 }
 
