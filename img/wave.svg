@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="galaxyGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff1a3c"/>   <!-- rojo predominante -->
+      <stop offset="35%" stop-color="#660066"/>  <!-- violeta oscuro -->
+      <stop offset="70%" stop-color="#003366"/>  <!-- azul profundo -->
+      <stop offset="100%" stop-color="#000000"/> <!-- negro para fundirse -->
+    </linearGradient>
+  </defs>
+  <!-- curva invertida: bordes arriba, centro abajo -->
+  <path d="M0,20 C360,120 1080,120 1440,20 L1440,120 L0,120 Z" fill="url(#galaxyGradient)" />
+</svg>
+

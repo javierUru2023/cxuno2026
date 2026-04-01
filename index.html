@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CXUNO RADIO</title>
+
+  <!-- Fuente Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+
+  <!-- CSS principal -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <main class="page-content">
+    <section id="inicio" class="inicio-panel" data-section>
+      <!-- HEADER -->
+      <header class="header">
+        <div class="header-grid">
+          <!-- LOGO MOBILE -->
+          <img src="img/logo-cxuno-radio.jpeg" alt="CXUNO RADIO" class="logo-mobile">
+          <!-- LOGO DESKTOP RECTANGULAR CON TRANSPARENCIA -->
+          <img src="img/logo-cxuno-radio-desktop1.png" alt="CXUNO RADIO" class="logo-desktop">
+          <!-- SUBTÍTULO -->
+          <p class="subtitle">El sonido de tu día</p>
+        </div>
+      </header>
+
+      <div class="container">
+        <div class="player-box">
+          <div class="background-image"></div>
+          <audio id="cxunoPlayer" src="https://stream.zeno.fm/fasg5w19rm0uv" preload="none"></audio>
+          <div class="player-display">
+            <div class="equalizer-panel">
+              <div class="equalizer stopped">
+              <div class="equalizer-overlay" aria-live="polite">
+                <h2 class="equalizer-show-name" id="equalizerShowName">CXUNO Radio</h2>
+                <span class="equalizer-live-badge" id="liveStatusText">EN VIVO</span>
+              </div>
+      <!-- 20 columnas con 8 fragmentos -->
+      <div class="column">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span class="top"></span>
+      </div>
+      <div class="column">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span class="top"></span>
+      </div>
+      <div class="column">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span class="top"></span>
+      </div>
+      <div class="column">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span class="top"></span>
+      </div>
+      <div class="column">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span class="top"></span>
+      </div>
+      <div class="column">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span class="top"></span>
+      </div>
+      <div class="column">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span class="top"></span>
+      </div>
+      <div class="column">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span class="top"></span>
+      </div>
+      <div class="column">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span class="top"></span>
+      </div>
+      <div class="column">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span class="top"></span>
+      </div>
+      <div class="column">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span class="top"></span>
+      </div>
+      <div class="column">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span class="top"></span>
+      </div>
+      <div class="column">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span class="top"></span>
+      </div>
+      <div class="column">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span class="top"></span>
+      </div>
+      <div class="column">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span class="top"></span>
+      </div>
+      <div class="column">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span class="top"></span>
+      </div>
+      <div class="column">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span class="top"></span>
+      </div>
+      <div class="column">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span class="top"></span>
+      </div>
+      <div class="column">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span class="top"></span>
+      </div>
+      <div class="column">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span class="top"></span>
+      </div>
+              </div>
+            </div>
+
+            <section class="now-playing-card" aria-label="Programacion actual de la radio">
+              <p class="show-kicker">Programacion actual</p>
+              <p class="show-time" id="currentShowTime">Cargando programacion...</p>
+              <p class="show-next" id="nextShowText">Actualizando la grilla de hoy...</p>
+            </section>
+          </div>
+
+          <div class="line"></div>
+
+          <div class="controls">
+            <button id="btnPlayPause" class="btn-play">▶</button>
+            <button id="btnStop" class="btn-stop">⏹</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider">
+        <span class="live-label"> Escucha en vivo </span>
+      </div>
+    </section>
+
+    <section id="programacion" class="page-section" data-section>
+      <div class="section-card">
+        <h2 class="section-title">Programación</h2>
+        <p class="section-text section-intro">Una grilla pensada para acompañar cada momento del día con una identidad musical clara, actual y cercana. Estos son los espacios que forman el sonido de CXUNO Radio.</p>
+
+        <div class="program-grid" aria-label="Descripcion de programas">
+          <article class="program-card">
+            <p class="program-hours">06:00 - 08:00</p>
+            <h3 class="program-name">Radio Lounge</h3>
+            <p class="program-copy">Una propuesta pensada para comenzar el día con calma, estilo y buenas sensaciones. Radio Lounge reúne sonidos suaves, climas relajados y una selección ideal para acompañar las primeras horas.</p>
+          </article>
+
+          <article class="program-card">
+            <p class="program-hours">08:00 - 12:00</p>
+            <h3 class="program-name">Wake Up</h3>
+            <p class="program-copy">La mañana toma impulso con una selección centrada en la música más actual. Wake Up acompaña la primera parte del día con un sonido fresco, dinámico y en sintonía con el presente.</p>
+          </article>
+
+          <article class="program-card">
+            <p class="program-hours">12:00 - 19:00</p>
+            <h3 class="program-name">Music Express</h3>
+            <p class="program-copy">Un recorrido por grandes canciones, artistas clave y sonidos que han dejado huella en distintas partes del mundo. Music Express propone un viaje musical amplio, ágil y lleno de momentos destacados.</p>
+          </article>
+
+          <article class="program-card">
+            <p class="program-hours">19:00 - 21:00</p>
+            <h3 class="program-name">Backtrack</h3>
+            <p class="program-copy">Un espacio para volver a esas canciones que siempre vale la pena escuchar otra vez. Backtrack recupera temas inolvidables, favoritos de siempre y momentos musicales que siguen vigentes con el paso del tiempo.</p>
+          </article>
+
+          <article class="program-card">
+            <p class="program-hours">21:00 - 06:00</p>
+            <h3 class="program-name">Radio Night</h3>
+            <p class="program-copy">Cuando el día comienza a bajar su ritmo, Radio Night propone una selección más serena, envolvente y nocturna. Un clima pensado para acompañar el cierre de la jornada con buena música y una vibra más relajada.</p>
+            <p class="program-note">Los viernes, Radio Night suma más energía, más pulso y una atmósfera inspirada en la noche, con un perfil más rítmico y cercano a la pista.</p>
+          </article>
+
+          <article class="program-card">
+            <p class="program-hours">Fin de semana</p>
+            <h3 class="program-name">CX Weekend</h3>
+            <p class="program-copy">El fin de semana tiene su propio sonido, y CX Weekend lo acompaña con una selección pensada para disfrutar, relajarse y divertirse. Música ideal para vivir el sábado y el domingo con otro ánimo.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto" class="page-section" data-section>
+      <div class="section-card">
+        <h2 class="section-title">Contacto</h2>
+        <p class="section-text section-intro">Si querés comunicarte con CXUNO Radio, enviarnos una consulta o acercarnos una propuesta, podés hacerlo desde este formulario. Te responderemos a la brevedad.</p>
+
+        <div class="contact-layout">
+          <div class="contact-copy-block">
+            <p class="contact-kicker">Canal directo</p>
+            <h3 class="program-name contact-heading">Escribinos sin salir de la transmisión</h3>
+            <p class="section-text">Completá tus datos y contanos tu consulta, comentario o propuesta. Nuestro equipo te responderá a la brevedad.</p>
+            <p class="contact-note">Tu mensaje se procesa de forma segura y llega directamente al equipo de CXUNO Radio.</p>
+          </div>
+
+          <form id="contactForm" class="contact-form" novalidate>
+            <input type="hidden" name="subject" value="Nuevo mensaje desde CXUNO Radio">
+            <input type="hidden" name="from_name" value="Formulario Web CXUNO Radio">
+            <input type="checkbox" name="botcheck" class="contact-honeypot" tabindex="-1" autocomplete="off">
+
+            <label class="contact-field">
+              <span class="contact-label">Nombre</span>
+              <input type="text" name="name" class="contact-input" placeholder="Tu nombre" required>
+            </label>
+
+            <label class="contact-field">
+              <span class="contact-label">Email</span>
+              <input type="email" name="email" class="contact-input" placeholder="tunombre@email.com" required>
+            </label>
+
+            <label class="contact-field">
+              <span class="contact-label">Asunto</span>
+              <input type="text" name="subject" class="contact-input" placeholder="Motivo del mensaje" required>
+            </label>
+
+            <label class="contact-field contact-field-full">
+              <span class="contact-label">Mensaje</span>
+              <textarea name="message" class="contact-input contact-textarea" placeholder="Escribí tu mensaje" rows="6" required></textarea>
+            </label>
+
+            <div class="contact-actions">
+              <button type="submit" id="contactSubmit" class="contact-submit">Enviar mensaje</button>
+              <p id="contactStatus" class="contact-status" aria-live="polite"></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="tu-voz" class="page-section" data-section>
+      <div class="section-card">
+        <h2 class="section-title">Tu Voz</h2>
+        <p class="section-text section-intro">Este espacio es para vos. Compartí tus comentarios, opiniones y sugerencias sobre la música de CXUNO Radio.</p>
+
+        <div class="voice-layout">
+          <div class="voice-copy-block">
+            <p class="contact-kicker">Comunidad CXUNO</p>
+            <h3 class="program-name contact-heading">Tu opinión nos importa</h3>
+            <p class="section-text">Tu mensaje nos ayuda a mejorar la experiencia de escucha y a seguir construyendo una radio hecha para la audiencia.</p>
+          </div>
+
+          <form id="voiceForm" class="contact-form" novalidate>
+            <input type="hidden" name="subject" value="Nuevo mensaje Tu Voz - CXUNO Radio">
+            <input type="hidden" name="from_name" value="Tu Voz - CXUNO Radio">
+            <input type="checkbox" name="botcheck" class="contact-honeypot" tabindex="-1" autocomplete="off">
+
+            <label class="contact-field">
+              <span class="contact-label">Nombre o apodo</span>
+              <input type="text" name="name" class="contact-input" placeholder="Cómo querés que te identifiquemos" required>
+            </label>
+
+            <label class="contact-field">
+              <span class="contact-label">Ciudad (opcional)</span>
+              <input type="text" name="city" class="contact-input" placeholder="Tu ciudad">
+            </label>
+
+            <label class="contact-field">
+              <span class="contact-label">Tipo de mensaje</span>
+              <select name="message_type" class="contact-input" required>
+                <option value="" selected disabled>Seleccioná una opción</option>
+                <option value="Comentario">Comentario</option>
+                <option value="Sugerencia musical">Sugerencia musical</option>
+                <option value="Opinión">Opinión</option>
+                <option value="Saludo">Saludo</option>
+              </select>
+            </label>
+
+            <label class="contact-field contact-field-full">
+              <span class="contact-label">Mensaje</span>
+              <textarea name="message" class="contact-input contact-textarea" placeholder="Contanos tu opinión" rows="6" maxlength="700" required></textarea>
+            </label>
+
+            <label class="contact-consent contact-field-full">
+              <input type="checkbox" name="consent" required>
+              <span>Acepto que CXUNO Radio pueda utilizar mi comentario de forma parcial en contenidos de la emisora.</span>
+            </label>
+
+            <div class="contact-actions">
+              <button type="submit" id="voiceSubmit" class="contact-submit">Enviar opinión</button>
+              <p id="voiceStatus" class="contact-status" aria-live="polite"></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-menu" aria-label="Navegacion principal">
+  <a href="#inicio" class="menu-item active" data-target="inicio">
+      <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M3 11.5 12 4l9 7.5"></path>
+        <path d="M5.5 10.5V20h13V10.5"></path>
+        <path d="M10 20v-5h4v5"></path>
+      </svg>
+    <span class="menu-label">Inicio</span>
+  </a>
+  <a href="#programacion" class="menu-item" data-target="programacion">
+      <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <rect x="4" y="5" width="16" height="15" rx="2"></rect>
+        <path d="M8 3v4M16 3v4M4 10h16"></path>
+        <path d="M8 14h3M13 14h3M8 17h3"></path>
+      </svg>
+    <span class="menu-label">Programación</span>
+  </a>
+  <a href="#contacto" class="menu-item" data-target="contacto">
+      <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+        <path d="m4.5 7 7.5 6 7.5-6"></path>
+      </svg>
+    <span class="menu-label">Contacto</span>
+  </a>
+  <a href="#tu-voz" class="menu-item" data-target="tu-voz">
+      <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 4a3 3 0 0 0-3 3v4a3 3 0 0 0 6 0V7a3 3 0 0 0-3-3Z"></path>
+        <path d="M6.5 11a5.5 5.5 0 1 0 11 0"></path>
+        <path d="M12 16.5V20"></path>
+        <path d="M9.5 20h5"></path>
+      </svg>
+    <span class="menu-label">Tu Voz</span>
+  </a>
+</nav>
+
+  <script src="js/schedule-data.js"></script>
+  <script src="js/player.js"></script>
+</body>
+</html>
