@@ -727,42 +727,6 @@ body {
   }
 
   .equalizer-live-badge {
-    @media (max-width: 400px) {
-      .show-kicker {
-        font-size: 0.64rem;
-        letter-spacing: 0.05em;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .show-time,
-      .show-next {
-        font-size: 0.66rem;
-        line-height: 1.2;
-        overflow-wrap: anywhere;
-      }
-
-      .show-time {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
-
-      .show-next {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
-
-      .now-playing-card {
-        overflow: hidden;
-      }
-    }
     padding: 8px 0.35rem;
   }
 

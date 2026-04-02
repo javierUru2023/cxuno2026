@@ -335,18 +335,22 @@ function scrollToSection(targetId) {
 
   setActiveMenuItem(targetId);
 
-  // getBoundingClientRect + pageYOffset: no depende de offsetParent ni de
-  // cual elemento sea el scroll container. Mas confiable en Android/MIUI.
+  const scrollingElement = document.scrollingElement || document.documentElement || document.body;
   const rect = section.getBoundingClientRect();
   const currentScroll = window.pageYOffset
-    || document.documentElement.scrollTop
-    || document.body.scrollTop
+    || scrollingElement.scrollTop
     || 0;
   const top = Math.max(0, currentScroll + rect.top - 8);
+
   try {
     window.scrollTo({ top: top, behavior: "smooth" });
   } catch (e) {
     window.scrollTo(0, top);
+  }
+
+  // Actualiza la URL para que las anclas sigan funcionando aun sin JS.
+  if (window.location.hash !== `#${targetId}`) {
+    history.replaceState(null, "", `#${targetId}`);
   }
 }
 
@@ -357,10 +361,31 @@ function bindMenuAnchors() {
     item.addEventListener("click", (event) => {
       const targetId = item.dataset.target;
       if (!targetId) return;
-      event.preventDefault();
-      scrollToSection(targetId);
+      const section = document.getElementById(targetId);
+      if (!section) return;
+
+      // Deja que el comportamiento nativo del ancla haga el scroll.
+      // Es mas estable en distintos navegadores moviles.
+      setActiveMenuItem(targetId);
     });
   });
+}
+
+function bindHashNavigation() {
+  window.addEventListener("hashchange", () => {
+    const targetId = window.location.hash.replace("#", "");
+    if (!targetId) return;
+    setActiveMenuItem(targetId);
+  });
+}
+
+function syncMenuFromCurrentHash() {
+  const targetId = window.location.hash.replace("#", "");
+  if (targetId && document.getElementById(targetId)) {
+    setActiveMenuItem(targetId);
+  } else {
+    setActiveMenuItem("inicio");
+  }
 }
 
 function watchSectionsForMenuState() {
@@ -583,11 +608,12 @@ if (btnStop) {
 }
 
 bindMenuAnchors();
+bindHashNavigation();
 watchSectionsForMenuState();
 bindScrollIndicator();
 bindContactForm();
 bindVoiceForm();
-setActiveMenuItem("inicio");
+syncMenuFromCurrentHash();
 
 updateScheduleDisplay();
 setInterval(updateScheduleDisplay, 60000);
